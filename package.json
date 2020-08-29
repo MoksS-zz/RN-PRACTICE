@@ -1,0 +1,14 @@
+{
+  "name": "RN-PRACTICE",
+  "version": "1.0.0",
+  "description": "Изучаю практикую  ReactNative",
+  "main": "index.js",
+  "repository": "git@github.com:MoksS/RN-PRACTICE.git",
+  "author": "MoksS <MoksShuv@yandex.ru>",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "axios": "^0.20.0",
+    "expo-cli": "^3.25.1"
+  }
+}
