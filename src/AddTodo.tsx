@@ -1,15 +1,37 @@
-import React from 'react';
-import { View, StyleSheet, TextInput, Button } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet, TextInput, Button, Alert } from 'react-native';
 
-function AddTodo() {
+interface AddTodo {
+  onSubmit(title: string): void
+}
+
+function AddTodo({ onSubmit }: AddTodo) {
+  const [value, setValue] = useState('');
+
   function onPressButton() {
-    console.log('click');
+    if (value.trim()) {
+      onSubmit(value);
+      setValue('');
+    } else {
+      Alert.alert('Invalid title');
+    } 
+
   }
 
   return (
     <View style={ styles.block }>
-      <TextInput style={ styles.input }/>
-      <Button title='Добавить' onPress={onPressButton}/>
+      <TextInput 
+        style={ styles.input }
+        placeholder='title name...'
+        value={ value }
+        onChangeText={ setValue }
+        autoCorrect={ false }
+        autoCapitalize='none'
+      />
+      <Button 
+        title='Добавить' 
+        onPress={ onPressButton }
+      />
     </View>
   )
 }
@@ -20,8 +42,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 30,
-    paddingVertical: 20,
+    marginBottom: 15
   },
   input: {
     width: '70%',
