@@ -2,19 +2,20 @@ import React from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 
 interface Todo {
-  todo:{
+  todo: {
     title: string,
     id: string
   },
-  onRemove(id: string): void
+  onRemove(id: string): void,
+  openTodo(id: string):void
 }
 
-function Todo ({ todo, onRemove }: Todo) {
+function Todo ({ todo, onRemove, openTodo }: Todo) {
 
   return (
     <TouchableOpacity 
       activeOpacity={ 0.5 }
-      onPress={() => console.log('TODO--->', todo.id )}
+      onPress={() => openTodo(todo.id) }
       onLongPress={ onRemove.bind(null, todo.id) }
     >
       <View style={ styles.todo }>
