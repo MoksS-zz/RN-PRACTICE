@@ -1,31 +1,48 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet, Platform } from 'react-native';
 import { THEME } from '../theme';
+import AppTextBold from './UI/AppTextBold';
 
 interface NavbarProps {
-  title: string
+  title: string;
 }
 
 function Navbar(props: NavbarProps) {
   return (
-    <View style={ styles.navbar }>
-      <Text style={ styles.text }>{ props.title }</Text>
+    <View
+      style={{
+        ...styles.navbar,
+        ...Platform.select({
+          android: styles.navbarAndroid,
+          ios: styles.navbarIos,
+        }),
+      }}
+    >
+      <AppTextBold style={styles.text}>{props.title}</AppTextBold>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
   navbar: {
-    height: 45,
+    height: 70,
     alignItems: 'center',
     justifyContent: 'flex-end',
+    paddingBottom: 10,
+  },
+  navbarAndroid: {
     backgroundColor: THEME.MAIN_COLOR,
-    paddingBottom: 10
+    borderBottomColor: THEME.MAIN_COLOR,
+    borderBottomWidth: 1
+  },
+  navbarIos: {
+    borderBottomColor: THEME.MAIN_COLOR,
+    borderBottomWidth: 1,
   },
   text: {
-    color: 'white',
-    fontSize: 20
-  }
+    color: Platform.OS === 'ios' ? THEME.MAIN_COLOR : 'white',
+    fontSize: 20,
+  },
 });
 
 export default Navbar;
