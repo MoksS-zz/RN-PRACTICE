@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, TextInput, Modal, Alert } from 'react-native'
+import { View, StyleSheet, TextInput, Button, Modal, Alert } from 'react-native'
 import { THEME } from '../theme'
 import { AppButton } from './ui/AppButton'
 
@@ -20,8 +20,8 @@ export const EditModal = ({ visible, onCancel, value, onSave }) => {
   }
 
   const cancelHandler = () => {
-    setTitle(value); 
-    onCancel();
+    setTitle(value)
+    onCancel()
   }
 
   return (

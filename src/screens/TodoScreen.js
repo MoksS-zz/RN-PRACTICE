@@ -10,14 +10,14 @@ import { TodoContext } from '../context/todo/todoContext'
 import { ScreenContext } from '../context/screen/screenContext'
 
 export const TodoScreen = () => {
+  const { todos, updateTodo, removeTodo } = useContext(TodoContext)
+  const { todoId, changeScreen } = useContext(ScreenContext)
   const [modal, setModal] = useState(false)
-  const { todos, updateTodo, removeTodo } = useContext(TodoContext);
-  const { todoId, changeScreen } = useContext(ScreenContext);
-  
-  const todo = todos.find(t => t.id === todoId);
 
-  const saveHandler = title => {
-    updateTodo(todo.id, title)
+  const todo = todos.find(t => t.id === todoId)
+
+  const saveHandler = async title => {
+    await updateTodo(todo.id, title)
     setModal(false)
   }
 
@@ -39,7 +39,10 @@ export const TodoScreen = () => {
 
       <View style={styles.buttons}>
         <View style={styles.button}>
-          <AppButton onPress={() => changeScreen(null)} color={THEME.GREY_COLOR}>
+          <AppButton
+            onPress={() => changeScreen(null)}
+            color={THEME.GREY_COLOR}
+          >
             <AntDesign name='back' size={20} color='#fff' />
           </AppButton>
         </View>
