@@ -9,6 +9,7 @@ import {
 const initialState = {
   allPosts: [],
   bookedPosts: [],
+  loading: true
 };
 
 const redusersObj = {
@@ -16,6 +17,7 @@ const redusersObj = {
     ...state,
     allPosts: posts,
     bookedPosts: posts.filter((post) => post.booked),
+    loading: false
   }),
 
   [TOOGLE_BOOKED]: (state, id) => {

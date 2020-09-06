@@ -15,39 +15,45 @@ export const loadPosts = () => async (dispatch) => {
   });
 };
 
-export const toogleBooked = (id) => ({
-  type: TOOGLE_BOOKED,
-  payload: id,
-});
+export const toogleBooked = (post) => async (dispatch) => {
+  await DB.updatePost(post);
+  return dispatch({
+    type: TOOGLE_BOOKED,
+    payload: post.id,
+  });
+};
 
-export const removePost = (id) => ({
-  type: REMOVE_POST,
-  payload: id,
-});
+export const removePost = (id) => async (dispatch) => {
+  await DB.removePost(id);
+  return dispatch({
+    type: REMOVE_POST,
+    payload: id,
+  });
+};
 
-export const addPost = post => async dispatch => {
+export const addPost = (post) => async (dispatch) => {
   const fileName = post.img.split('/').pop();
   const newPath = FileSystem.documentDirectory + fileName;
 
   try {
     await FileSystem.moveAsync({
       to: newPath,
-      from: post.img
-    })
+      from: post.img,
+    });
   } catch (error) {
     console.error('Error:', error);
   }
 
   const payload = {
     ...post,
-    img: newPath
-  }
+    img: newPath,
+  };
 
   const id = await DB.createPost(payload);
   payload.id = id.toString();
 
   return dispatch({
     type: ADD_POST,
-    payload
+    payload,
   });
 };
