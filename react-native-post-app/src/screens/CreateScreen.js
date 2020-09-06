@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -15,21 +15,26 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { AppHeaderIcon } from '../components/AppHeaderIcon';
 import { THEME } from '../theme';
 import { addPost } from '../store/actions/postActions';
+import { PhotoPicker } from '../components/PhotoPicker';
 
 export const CreateScreen = ({navigation}) => {
   const [text, setText] = useState('');
   const dispatch = useDispatch();
-  const img = 'https://static.coindesk.com/wp-content/uploads/2019/01/shutterstock_1012724596-860x430.jpg';
+  const [imgRef, setImgRef] = useState(null);
 
   const saveHandler = () => {
     const post = {
       date: new Date().toJSON(),
       text,
-      img,
+      img: imgRef,
       booked: false
     };
     dispatch(addPost(post));
     navigation.navigate('Main');
+  };
+
+  const photoPickHandler = uri => {
+    setImgRef(uri);
   };
 
   return (
@@ -44,16 +49,12 @@ export const CreateScreen = ({navigation}) => {
             onChangeText={setText}
             multiline
           />
-          <Image
-            style={{ width: '100%', height: 200, marginBottom: 10 }}
-            source={{
-              uri: img,
-            }}
-          />
+          <PhotoPicker onPick={photoPickHandler}/>
           <Button
             title='Создать пост'
             color={THEME.MAIN_COLOR}
             onPress={saveHandler}
+            disabled={!text || !imgRef}
           />
         </View>
       </TouchableWithoutFeedback>

@@ -1,4 +1,10 @@
-import { LOAD_POSTS, DEFAULT, TOOGLE_BOOKED, REMOVE_POST, ADD_POST } from '../typesStore';
+import {
+  LOAD_POSTS,
+  DEFAULT,
+  TOOGLE_BOOKED,
+  REMOVE_POST,
+  ADD_POST,
+} from '../typesStore';
 
 const initialState = {
   allPosts: [],
@@ -25,15 +31,20 @@ const redusersObj = {
     };
   },
 
-  [REMOVE_POST]: (state, id) => ({
-    ...state,
-    allPosts: state.allPosts.filter(p => p.id !== id),
-    bookedPosts: state.bookedPosts.filter(p => p.id !== id)
-  }),
+  [REMOVE_POST]: (state, id) => {
+    console.log('lexa', id);
+    console.log(state.bookedPosts)
+    console.log(state.bookedPosts.filter((p) => p.id !== id))
+    return {
+      ...state,
+      allPosts: state.allPosts.filter((p) => p.id !== id),
+      bookedPosts: state.bookedPosts.filter((p) => p.id !== id),
+    };
+  },
 
   [ADD_POST]: (state, newPost) => ({
     ...state,
-    allPosts: [newPost, ...state.allPosts]
+    allPosts: [newPost, ...state.allPosts],
   }),
 
   [DEFAULT]: (state) => state,

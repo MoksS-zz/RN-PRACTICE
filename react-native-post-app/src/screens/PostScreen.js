@@ -47,12 +47,17 @@ export const PostScreen = ({ navigation }) => {
         },
         { text: 'Удалить', style: 'destructive', onPress() {
           navigation.navigate('Main');
-          dispatch(removePost());
+          console.log(postId);
+          dispatch(removePost(postId));
         }},
       ],
       { cancelable: false }
     );
   };
+
+  if (!post) {
+    return null;
+  }
 
   return (
     <ScrollView>
